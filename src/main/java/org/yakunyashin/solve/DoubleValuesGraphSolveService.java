@@ -1,18 +1,17 @@
-package org.yakunyashin;
+package org.yakunyashin.solve;
 
 import javafx.util.Pair;
 import org.yakunyashin.ratiograph.RatioGraph;
 
 import java.text.DecimalFormat;
 
-public class GraphSolveService {
+public class DoubleValuesGraphSolveService implements GraphSolveService {
 
-    public static final String INPUT_CONTAINS_NO_UNKNOWN_VALUES_MSG = "Input contains no unknown values";
-    public static final String CONVERSION_NOT_POSSIBLE_MSG = "Conversion not possible.";
     public static final String SINGLE_SPACE = " ";
+    public static final String NEW_LINE = "\n";
     private final RatioGraph<Double> graph;
 
-    public GraphSolveService(RatioGraph<Double> ratioGraph) {
+    public DoubleValuesGraphSolveService(RatioGraph<Double> ratioGraph) {
         this.graph = ratioGraph;
     }
 
@@ -23,7 +22,7 @@ public class GraphSolveService {
         }
         for (Pair<RatioGraph.Node<Double>, RatioGraph.Node<Double>> unknownValue : graph.getUnknownRatios()) {
             builder.append(getSolvedUnknownRatioString(unknownValue.getKey(),
-                    unknownValue.getValue())).append("\n");
+                    unknownValue.getValue())).append(NEW_LINE);
         }
         return builder.toString();
     }

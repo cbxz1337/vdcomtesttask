@@ -1,4 +1,4 @@
-package org.yakunyashin.graph.services;
+package org.yakunyashin.ratiograph.service;
 
 import javafx.util.Pair;
 import org.yakunyashin.ratiograph.RatioGraph;
@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.yakunyashin.ratiograph.RatioGraph.Node;
-public class RegexpGraphParseService implements GraphParseService<Double>{
+public class RegexpGraphParseService implements RatioGraphParseService<Double> {
 
     private static final String REGEX = "(?<a>[0-9]+([,.][0-9]?)?)\\s+(?<V>[A-Za-z]+)\\s*=\\s*(?<b>[0-9]+([,.][0-9]?)?|\\?)\\s+(?<W>[A-Za-z]+)$";
     public static final String LEFT_VAL_NAME = "V";
@@ -33,7 +33,7 @@ public class RegexpGraphParseService implements GraphParseService<Double>{
             Matcher matcher = PATTERN.matcher(inputLine);
             if (!matcher.find()) {
                 throw new IllegalArgumentException(String.format("Cannot validate line %s", inputLine));
-            };
+            }
             String V = matcher.group(LEFT_VAL_NAME);
             String W = matcher.group(RIGHT_VAL_NAME);
             String leftValStr = matcher.group(LEFT_VAL);
@@ -41,7 +41,7 @@ public class RegexpGraphParseService implements GraphParseService<Double>{
             double leftVal = Double.parseDouble(leftValStr);
             double rightVal;
             if (rightValStr.equals(UNKNOWN_VALUE_SIGN)) {
-                Pair<RatioGraph.Node<Double>, RatioGraph.Node<Double>> unknownRatio = new Pair<>(new Node<>(V, leftVal), new Node<>(W));
+                Pair<Node<Double>, Node<Double>> unknownRatio = new Pair<>(new Node<>(V, leftVal), new Node<>(W));
                 graph.addUnknownRation(unknownRatio);
                 continue;
             }
