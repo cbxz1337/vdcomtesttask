@@ -1,7 +1,7 @@
-package org.example;
+package org.yakunyashin;
 
-import org.example.graphutils.RatioGraphParser;
-import org.example.graphutils.RatioGroupValidator;
+import org.yakunyashin.graph.services.GraphParseService;
+import org.yakunyashin.graph.services.RegexpGraphParseService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +19,13 @@ public class Main {
             String line = SCANNER.nextLine();
             if (line.equalsIgnoreCase(START_CALCULATION_COMMAND)) {
                 SCANNER.close();
-                RatioGraphParser ratioGraphParser = new RatioGraphParser(input);
-                Solver solver = new Solver(ratioGraphParser.getParsedGraph());
+                GraphParseService<Double> graphParser = new RegexpGraphParseService(input);
+                GraphSolveService solver = new GraphSolveService(graphParser.getParsedGraph());
                 System.out.println(solver.getSolution());
                 flag = false;
-            } else if (RatioGroupValidator.validInputString(line)) {
-                input.add(line);
             } else {
-                throw new IllegalArgumentException(String.format("Cannot validate line %s", line));
+                input.add(line);
             }
-
         }
     }
 }
